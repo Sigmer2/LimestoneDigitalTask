@@ -1,35 +1,27 @@
-package main.java.com;
+package com;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import static com.Util.getDigits;
 
 public class Converter {
-    String convert(Integer integer) {
+    public String convert(Integer integer) {
         StringBuilder sb = new StringBuilder();
         boolean isProceed = true;
-        IntStream intStream = String.valueOf(integer).chars();
-        List<Integer> digits = intStream
-                .distinct()
-                .map(Character::getNumericValue)
-                .boxed()
-                .sorted()
-                .collect(Collectors.toList());
-        for (int i = 0; i < digits.size(); i++) {
-            if (i < digits.size() - 1) {
-                if (digits.get(i) + 1 == digits.get(i + 1)) {
+        Integer[] digits = getDigits(integer);
+        for (int i = 0; i < digits.length; i++) {
+            if (i < digits.length - 1) {
+                if (digits[i] + 1 == digits[i + 1]) {
                     if (isProceed) {
                         isProceed = false;
-                        sb.append(digits.get(i));
+                        sb.append(digits[i]);
                         sb.append("-");
                     }
                 } else {
                     isProceed = true;
-                    sb.append(digits.get(i));
+                    sb.append(digits[i]);
                     sb.append(",");
                 }
             } else {
-                sb.append(digits.get(i));
+                sb.append(digits[i]);
             }
         }
         return sb.toString();
